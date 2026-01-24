@@ -4,15 +4,20 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-
+import hashlib
 from database import SessionLocal
 from models import User
+from passlib.context import CryptContext
 
 SECRET_KEY = "CHANGE_THIS_SECRET"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto"
+)
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 def get_db():
@@ -22,11 +27,12 @@ def get_db():
     finally:
         db.close()
 
-def hash_password(password: str):
+def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
-def verify_password(password, hashed):
-    return pwd_context.verify(password, hashed)
+def verify_password(password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(password, hashed_password)
+
 
 def create_access_token(data: dict):
     to_encode = data.copy()

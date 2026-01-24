@@ -8,6 +8,8 @@ class InterviewAgent:
         self.level = level
         self.history = []
 
+    
+
     def _ask(self, system_prompt, user_answer):
         messages = [{"role": "system", "content": system_prompt}]
 
@@ -41,3 +43,37 @@ class InterviewAgent:
             ),
             answer
         )
+    
+    def generate_feedback(self):
+        feedback_prompt = f"""
+            You are an interview evaluator.
+
+            Based on the following interview conversation:
+
+            {self.history}
+
+            Give feedback strictly in JSON format:
+            {{
+            "communication": "score out of 10",
+            "confidence": "score out of 10",
+            "technical": "score out of 10",
+            "grammar": "score out of 10",
+            "overall": "score out of 10",
+            "summary": "short feedback paragraph"
+            }}
+            """.strip()
+
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a professional interview evaluator."
+            },
+            {
+                "role": "user",
+                "content": feedback_prompt
+            }
+        ]
+
+        return ask_llama(messages)
+
+    
