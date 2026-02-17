@@ -1,3 +1,4 @@
+// frontend/src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
@@ -12,10 +13,13 @@ import Register from "./pages/Register";
 import Interview from "./pages/Interview";
 import Feedback from "./pages/Feedback";
 
+// IMPORTANT: Do NOT import './App.css' here
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        {/* Navbar is inside the router so it can use Link components */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,8 +29,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/feedback" element={<Feedback />} />
-
-
           <Route
             path="/interview"
             element={
