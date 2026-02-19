@@ -7,82 +7,108 @@ function Navbar() {
   const { token, logout } = useContext(AuthContext);
 
   return (
-    <nav style={styles.nav}>
-      <h2 style={styles.logo}>MockHire AI</h2>
-      <div style={styles.links}>
-        <Link style={styles.link} to="/">HOME</Link>
-        <Link style={styles.link} to="/about">ABOUT</Link>
-        
-        {token ? (
-          <>
-            <Link style={styles.link} to="/interview">INTERVIEW</Link>
-            <button onClick={logout} style={styles.logout}>LOGOUT</button>
-          </>
-        ) : (
-          <>
-            <Link style={styles.link} to="/login">LOGIN</Link>
-            {/* ADDED REGISTER BACK HERE */}
-            <Link style={styles.registerBtn} to="/register">REGISTER</Link>
-          </>
-        )}
+    <nav style={styles.navContainer}>
+      <div style={styles.navInner}>
+        {/* 1. Logo now acts as a link to the home page */}
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div style={styles.logoGroup}>
+            <h2 style={styles.logo}>MockHire AI</h2>
+          </div>
+        </Link>
+
+        <div style={styles.links}>
+          {/* 2. Explicit Home link added */}
+          <Link style={styles.link} to="/">Home</Link>
+          
+          <div style={styles.linkWithIcon}>Features</div>
+          <div style={styles.linkWithIcon}>Resources</div>
+          <Link style={styles.link} to="/about">About</Link>
+          
+          {token ? (
+            <>
+              <Link style={styles.link} to="/interview">Interview</Link>
+              <button onClick={logout} style={styles.primaryBtn}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link style={styles.link} to="/register">Register</Link>
+              <Link to="/login">
+                <button style={styles.primaryBtn}>Get Started</button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
 }
 
 const styles = {
-  nav: {
+  navContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    padding: "20px 0",
+    position: "sticky", 
+    top: 0,
+    zIndex: 1000,
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+    backgroundColor: "rgba(255, 255, 255, 0.3)", 
+  },
+  navInner: {
+    width: "90%",
+    maxWidth: "1200px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "30px 60px",
-    background: "transparent",
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    zIndex: 100,
+    padding: "12px 40px",
+    background: "rgba(255, 255, 255, 0.8)", 
+    borderRadius: "50px",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+    border: "1px solid rgba(255, 255, 255, 0.3)",
+  },
+  logoGroup: {
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
   },
   logo: {
-    fontSize: "20px",
-    fontWeight: "900",
-    color: "#fff",
-    letterSpacing: "1px",
+    fontSize: "18px",
+    fontWeight: "800",
+    color: "#111827",
+    letterSpacing: "-0.5px",
+    margin: 0,
   },
   links: {
     display: "flex",
-    gap: "30px",
+    gap: "25px",
     alignItems: "center",
   },
   link: {
-    color: "#94a3b8",
+    color: "#374151",
     textDecoration: "none",
-    fontWeight: "600",
-    fontSize: "12px",
-    letterSpacing: "2px",
-    transition: "color 0.3s",
+    fontWeight: "500",
+    fontSize: "14px",
+    transition: "color 0.2s",
   },
-  registerBtn: {
-    color: "#fff",
-    textDecoration: "none",
-    fontWeight: "700",
-    fontSize: "12px",
-    letterSpacing: "2px",
-    padding: "8px 20px",
-    borderRadius: "20px",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
-    background: "rgba(255, 255, 255, 0.05)",
-    transition: "all 0.3s ease",
-  },
-  logout: {
-    background: "rgba(239, 68, 68, 0.1)",
-    color: "#ef4444",
-    border: "1px solid rgba(239, 68, 68, 0.3)",
-    padding: "8px 20px",
-    borderRadius: "20px",
+  linkWithIcon: {
+    color: "#374151",
+    fontWeight: "500",
+    fontSize: "14px",
     cursor: "pointer",
-    fontSize: "12px",
-    fontWeight: "bold",
-  }
+  },
+  primaryBtn: {
+    background: "#111827",
+    color: "#fff",
+    border: "none",
+    padding: "10px 24px",
+    borderRadius: "25px",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: "600",
+    transition: "background 0.2s",
+  },
 };
 
 export default Navbar;

@@ -1,138 +1,142 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
 
 export default function Home() {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      // Set the video playback speed to 0.7x (slightly slower)
-      videoRef.current.playbackRate = 0.7;
-    }
-  }, []);
-
   return (
-    <div style={styles.container}>
-      {/* 1. Background Video Layer */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={styles.backgroundVideo}
-      >
-        <source src="/Video.Guru_20260218_003548702.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+    <div style={styles.wrapper}>
+      {/* This main container now handles the vertical and horizontal centering */}
+      <main style={styles.heroSection}>
+        {/* Left Column: Your Original Text Content */}
+        <div style={styles.contentSide}>
+          <p style={styles.topBadge}>AI INTERVIEW ASSISTANT</p>
 
-      {/* 2. Dark Overlay Layer (Ensures text remains readable) */}
-      <div style={styles.overlay}></div>
+          <h1 style={styles.title}>
+            MockHire AI
+          </h1>
 
-      {/* 3. Hero Content Layer */}
-      <div className="glass-card animate-float" style={styles.heroCard}>
-        <div style={styles.badge}>NEXT-GEN AI</div>
-        
-        <h1 className="text-gradient" style={styles.title}>
-          MockHire AI
-        </h1>
-        
-        <p style={styles.subtitle}>
-          Step into a high-fidelity 3D interview environment powered by LLaMA intelligence. 
-          Refine your voice, master your presence, and conquer the technical stage.
-        </p>
+          <p style={styles.subtitle}>
+            Step into a high-fidelity 3D interview environment powered by LLaMA intelligence.
+            Refine your voice, master your presence, and conquer the technical stage.
+          </p>
 
-        <div style={styles.buttons}>
-          <Link to="/login">
-            <button style={styles.primary}>START INTERVIEW</button>
-          </Link>
+          <div style={styles.buttonGroup}>
+            <Link to="/login">
+              <button style={styles.primaryBtn}>START INTERVIEW</button>
+            </Link>
+          </div>
         </div>
-      </div>
+
+        {/* Right Column: Your Local Illustration */}
+        <div style={styles.imageSide} >
+          <img
+            src="/mockhire-ai.png" // Pointing to your local file
+            alt="MockHire AI Illustration"
+            style={styles.heroImage}
+          />
+        </div>
+      </main>
+
+      {/* Social Proof Footer */}
+      <section style={styles.brandsSection}>
+        <p style={styles.brandsText}>Users landed roles at</p>
+        <div style={styles.brandLogos}>
+          <span style={styles.logoText}>Meta</span>
+          <span style={styles.logoText}>Apple</span>
+          <span style={styles.logoText}>Google</span>
+          <span style={styles.logoText}>Amazon</span>
+          <span style={styles.logoText}>Nike</span>
+        </div>
+      </section>
     </div>
   );
 }
 
 const styles = {
-  container: {
-    height: "100vh",
-    width: "100vw",
+  wrapper: {
+    backgroundColor: "#fff",
+    minHeight: "100vh", // Full screen height
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "center", // Centers content vertically
+    alignItems: "center",     // Centers content horizontally
+    overflowX: "hidden",
+  },
+  heroSection: {
+    display: "flex",
     alignItems: "center",
-    perspective: "1200px",
-    position: "fixed", // Keeps background stable
-    top: 0,
-    left: 0,
-    overflow: "hidden",
-  },
-  backgroundVideo: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
+    justifyContent: "space-between",
+    maxWidth: "1200px",
     width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    transform: "translate(-50%, -50%)",
-    zIndex: -2,
+    padding: "0 40px",
+    gap: "60px",
+    flex: 1, // Allows the hero to take up the central space
   },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(2, 6, 23, 0.5)", // Adjust opacity here if video is too bright
-    zIndex: -1,
+  contentSide: {
+    flex: 1,
+    textAlign: "left",
   },
-  heroCard: {
-    padding: "80px 60px",
-    maxWidth: "800px",
-    textAlign: "center",
-    zIndex: 10,
-  },
-  badge: {
-    display: "inline-block",
-    padding: "6px 16px",
-    borderRadius: "30px",
-    background: "rgba(37, 99, 235, 0.15)",
-    color: "#60a5fa",
-    fontSize: "11px",
-    fontWeight: "900",
-    letterSpacing: "2px",
-    marginBottom: "30px",
-    border: "1px solid rgba(96, 165, 250, 0.2)",
+  topBadge: {
+    color: "#2563eb",
+    fontWeight: "800",
+    fontSize: "14px",
+    letterSpacing: "1.5px",
+    marginBottom: "15px",
   },
   title: {
-    fontSize: "84px",
+    fontSize: "72px",
     fontWeight: "900",
-    margin: "0 0 20px 0",
-    letterSpacing: "-4px",
-    lineHeight: "0.9",
-    color: "#fff",
+    lineHeight: "1.1",
+    color: "#0f172a",
+    margin: "0 0 25px 0",
+    letterSpacing: "-2px",
   },
   subtitle: {
-    fontSize: "18px",
-    lineHeight: "1.8",
-    color: "#cbd5e1",
-    marginBottom: "50px",
-    maxWidth: "550px",
-    marginInline: "auto",
+    fontSize: "19px",
+    lineHeight: "1.6",
+    color: "#475569",
+    marginBottom: "40px",
+    maxWidth: "500px",
   },
-  buttons: {
+  primaryBtn: {
+    padding: "16px 36px",
+    fontSize: "15px",
+    fontWeight: "700",
+    background: "#000",
+    color: "#fff",
+    border: "none",
+    borderRadius: "30px",
+    cursor: "pointer",
+    transition: "transform 0.2s",
+  },
+  imageSide: {
+    flex: 1,
     display: "flex",
     justifyContent: "center",
   },
-  primary: {
-    padding: "18px 48px",
-    fontSize: "14px",
-    fontWeight: "900",
-    letterSpacing: "1px",
-    background: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-    color: "white",
-    border: "none",
-    borderRadius: "40px",
-    cursor: "pointer",
-    boxShadow: "0 10px 30px -5px rgba(37, 99, 235, 0.5)",
-    transition: "transform 0.2s ease",
+  heroImage: {
+    width: "100%",
+    maxWidth: "550px",
+    height: "auto",
   },
+  brandsSection: {
+    width: "100%",
+    textAlign: "center",
+    paddingBottom: "40px", // Keeps some space at the very bottom
+  },
+  brandsText: {
+    fontSize: "14px",
+    color: "#94a3b8",
+    marginBottom: "20px",
+  },
+  brandLogos: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "40px",
+    opacity: 0.5,
+    filter: "grayscale(100%)",
+    fontWeight: "bold",
+    fontSize: "20px",
+  },
+  logoText: {
+    color: "#334155",
+  }
 };
